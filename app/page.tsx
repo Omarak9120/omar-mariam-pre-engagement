@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { ArrowDown, ArrowUpLeft, Heart, MapPin, Pause, Play, RotateCcw, Sparkles } from 'lucide-react';
+import { ArrowDown, ArrowUpLeft, Heart, MapPin, Pause, Play, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const celebration = {
@@ -35,7 +35,6 @@ function Countdown() {
 
 export default function Home() {
   const [phase, setPhase] = useState<'closed' | 'opening' | 'opened'>('closed');
-  const [reducedMotion, setReducedMotion] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [musicError, setMusicError] = useState(false);
   const audio = useRef<HTMLAudioElement>(null);
@@ -45,9 +44,9 @@ export default function Home() {
 
   useEffect(() => {
     if (phase !== 'opening') return;
-    const timer = window.setTimeout(() => setPhase(current => current === 'opening' ? 'opened' : current), reducedMotion ? 0 : 2600);
+    const timer = window.setTimeout(() => setPhase(current => current === 'opening' ? 'opened' : current), 2600);
     return () => window.clearTimeout(timer);
-  }, [phase, reducedMotion]);
+  }, [phase]);
 
   useEffect(() => {
     document.body.style.overflow = opened ? '' : 'hidden';
@@ -57,7 +56,7 @@ export default function Home() {
   }, [opened, phase]);
 
   useEffect(() => {
-    if (!opened || reducedMotion || !('IntersectionObserver' in window)) return;
+    if (!opened || !('IntersectionObserver' in window)) return;
     const sections = document.querySelectorAll<HTMLElement>('[data-reveal]');
     const observer = new IntersectionObserver(entries => {
       for (const entry of entries) {
@@ -71,7 +70,7 @@ export default function Home() {
       observer.disconnect();
       sections.forEach(section => section.classList.remove('reveal-ready', 'is-visible'));
     };
-  }, [opened, reducedMotion]);
+  }, [opened]);
 
   async function playMusic() {
     if (!audio.current) return;
@@ -87,7 +86,7 @@ export default function Home() {
     if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
     window.scrollTo({ top: 0, behavior: 'instant' });
     if (withMusic) void playMusic(); else audio.current?.pause();
-    setPhase(reducedMotion ? 'opened' : 'opening');
+    setPhase('opening');
   }
 
   function returnToIntro() {
@@ -98,7 +97,7 @@ export default function Home() {
   }
 
   return (
-    <div className="invitation-scene" data-motion={reducedMotion ? 'reduced' : 'full'} data-phase={phase}>
+    <div className="invitation-scene" data-motion="full" data-phase={phase}>
       <audio ref={audio} src={celebration.music} loop preload="none"
         onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)}
         onError={() => { setMusicError(true); setPlaying(false); }} />
@@ -120,9 +119,6 @@ export default function Home() {
             <span>المس لفتح الدعوة</span><ArrowUpLeft aria-hidden="true" />
           </Button>
           <button className="silent-open" onClick={() => openInvitation(false)} tabIndex={phase === 'closed' ? 0 : -1}>الدخول بدون موسيقى</button>
-          <button className="motion-toggle" aria-pressed={!reducedMotion} onClick={() => setReducedMotion(value => !value)} tabIndex={phase === 'closed' ? 0 : -1}>
-            <Sparkles size={15} aria-hidden="true" />{reducedMotion ? 'تشغيل الحركة الكاملة' : 'تخفيف الحركة'}
-          </button>
         </div>
       </div>
       <main className={`invitation ${phase !== 'closed' ? 'revealed' : ''}`} inert={!opened} aria-hidden={!opened}>
