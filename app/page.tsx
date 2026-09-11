@@ -170,7 +170,7 @@ export default function Home() {
           <span className="section-kicker">نعدّ اللحظات حتى نلقاكم</span>
           <h2 id="countdown-title">اقتربت فرحتنا</h2>
           <Countdown />
-          <p className="timezone-note">٢٦ أيلول ٢٠٢٦ · الخامسة مساءً بتوقيت بيروت</p>
+          <p className="timezone-note">٢٦ أيلول ٢٠٢٦ · الخامسة مساءً</p>
         </section>
         <section className="venue-section" aria-labelledby="venue-title" data-reveal>
           <div className="venue-content">
