@@ -106,7 +106,7 @@ export default function Home() {
         <div className="curtain curtain-left" aria-hidden="true" />
         <div className="cover-frame" aria-hidden="true" />
         <div className="gold-dust" aria-hidden="true">
-          {Array.from({ length: 14 }, (_, i) => <span key={i} style={{ left: `${7 + (i * 31) % 87}%`, top: `${8 + (i * 23) % 82}%`, animationDelay: `${-i * .63}s`, animationDuration: `${5 + i % 4}s` }} />)}
+          {Array.from({ length: 32 }, (_, i) => <span key={i} style={{ left: `${5 + (i * 31) % 91}%`, top: `${5 + (i * 23) % 90}%`, width: `${2 + i % 4}px`, height: `${2 + i % 4}px`, animationDelay: `${-i * .87}s`, animationDuration: `${5 + (i % 5) * .7}s`, animationDirection: i % 2 ? 'reverse' : 'normal' }} />)}
         </div>
         <div className="cover-content">
           <p className="cover-eyebrow">إلى مَن تكتمل فرحتنا بحضورهم</p>
