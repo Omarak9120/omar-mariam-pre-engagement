@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { ArrowDown, ArrowUpLeft, Heart, MapPin, Pause, Play } from 'lucide-react';
+import { ArrowDown, ArrowUpLeft, Heart, MapPin, Pause, Play, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const celebration = {
@@ -39,9 +39,12 @@ export default function Home() {
   const [musicError, setMusicError] = useState(false);
   const audio = useRef<HTMLAudioElement>(null);
   const heading = useRef<HTMLHeadingElement>(null);
+  const openButton = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     document.body.style.overflow = opened ? '' : 'hidden';
+    if (opened) heading.current?.focus({ preventScroll: true });
+    else openButton.current?.focus({ preventScroll: true });
     return () => { document.body.style.overflow = ''; };
   }, [opened]);
 
@@ -55,9 +58,15 @@ export default function Home() {
   }
 
   function openInvitation(withMusic: boolean) {
+    window.scrollTo({ top: 0, behavior: 'instant' });
     setOpened(true);
-    if (withMusic) void playMusic();
-    window.setTimeout(() => heading.current?.focus({ preventScroll: true }), 950);
+    if (withMusic) void playMusic(); else audio.current?.pause();
+  }
+
+  function returnToIntro() {
+    audio.current?.pause();
+    setOpened(false);
+    window.scrollTo({ top: 0, behavior: 'instant' });
   }
 
   return (
@@ -67,21 +76,21 @@ export default function Home() {
         onError={() => { setMusicError(true); setPlaying(false); }} />
       <div className={`invitation-cover ${opened ? 'is-open' : ''}`} aria-hidden={opened} inert={opened}>
         <div className="cover-frame" aria-hidden="true" />
-        <p className="cover-eyebrow">إلى مَن تكتمل فرحتنا بحضورهم</p>
-        <div className="cover-monogram" aria-hidden="true">ع <span>و</span> م</div>
-        <p className="cover-caption">بداية حكايتنا</p>
+        <p className="cover-eyebrow">وصلتكم دعوة بكلّ الحبّ</p>
         <h2 className="cover-names">عمر <span>و</span> مريم</h2>
-        <p className="cover-date">٢٦ . ٠٩ . ٢٠٢٦</p>
-        <Button className="open-button" onClick={() => openInvitation(true)} tabIndex={opened ? -1 : 0}>
-          افتح الدعوة <ArrowUpLeft aria-hidden="true" />
+        <Button ref={openButton} className="envelope-button" onClick={() => openInvitation(true)} tabIndex={opened ? -1 : 0}>
+          <img src="/images/envelope.webp" alt="" width="1536" height="1024" fetchPriority="high" />
+          <span className="open-label">افتح الدعوة <ArrowUpLeft aria-hidden="true" /></span>
         </Button>
         <button className="silent-open" onClick={() => openInvitation(false)} tabIndex={opened ? -1 : 0}>الدخول بدون موسيقى</button>
         <p className="cover-bottom">بكلّ الحبّ، ندعوكم لمشاركتنا خطبتنا</p>
       </div>
       <main className={`invitation ${opened ? 'revealed' : ''}`} inert={!opened} aria-hidden={!opened}>
         <header className="site-header">
-          <a href="#home" className="wordmark" aria-label="عمر ومريم، بداية الدعوة">ع <span>و</span> م</a>
-          <span className="header-date">٢٦ أيلول ٢٠٢٦</span>
+          <Button variant="ghost" className="intro-return" onClick={returnToIntro}>
+            <RotateCcw aria-hidden="true" /><span>العودة إلى الافتتاحية</span>
+          </Button>
+          <a href="#home" className="wordmark" aria-label="عمر ومريم، بداية الدعوة">عمر <span>و</span> مريم</a>
           <Button variant="ghost" className="music-button" aria-pressed={playing}
             aria-label={playing ? 'إيقاف الموسيقى' : 'تشغيل الموسيقى'}
             onClick={() => playing ? audio.current?.pause() : void playMusic()}>
@@ -105,18 +114,11 @@ export default function Home() {
             <div className="hero-date" aria-label="السبت، ٢٦ أيلول ٢٠٢٦، الساعة الخامسة مساءً">
               <span>السبت</span><strong>٢٦</strong><span>أيلول<br />٢٠٢٦</span>
             </div>
-            <p className="hero-time">الخامسة مساءً <span>·</span> عكّار العتيقة</p>
+            <p className="hero-time">الخامسة مساءً</p>
             <a className="scroll-link" href="#our-day"><span>تفاصيل فرحتنا</span><ArrowDown size={18} aria-hidden="true" /></a>
           </div>
-          <span className="edge-note" aria-hidden="true">عمر ومريم · بداية العمر</span>
         </section>
-        <section className="countdown-section" id="our-day" aria-labelledby="countdown-title">
-          <span className="section-kicker">نعدّ اللحظات حتى نلقاكم</span>
-          <h2 id="countdown-title">اقتربت فرحتنا</h2>
-          <Countdown />
-          <p className="timezone-note">السبت ٢٦ أيلول ٢٠٢٦ · الخامسة مساءً بتوقيت بيروت</p>
-        </section>
-        <section className="invitation-note" aria-labelledby="note-title">
+        <section className="invitation-note" id="our-day" aria-labelledby="note-title">
           <Heart className="note-icon" size={26} strokeWidth={1} aria-hidden="true" />
           <p className="section-kicker">أهلنا وأحبّتنا</p>
           <h2 id="note-title">أنتم أجمل تفاصيل هذا اليوم</h2>
@@ -124,12 +126,15 @@ export default function Home() {
           <p className="note-signature">بحضوركم، تحلو البدايات</p>
           <div className="fine-rule" aria-hidden="true"><span>✧</span></div>
         </section>
+        <section className="countdown-section" aria-labelledby="countdown-title">
+          <span className="section-kicker">نعدّ اللحظات حتى نلقاكم</span>
+          <h2 id="countdown-title">اقتربت فرحتنا</h2>
+          <Countdown />
+          <p className="timezone-note">٢٦ أيلول ٢٠٢٦ · الخامسة مساءً بتوقيت بيروت</p>
+        </section>
         <section className="venue-section" aria-labelledby="venue-title">
-          <div className="venue-date-panel">
-            <p>موعدنا</p><span className="venue-day">٢٦</span><span>أيلول ٢٠٢٦</span>
-            <div className="venue-rule" /><p>السبت · الخامسة مساءً</p>
-          </div>
           <div className="venue-content">
+            <MapPin className="venue-icon" size={30} strokeWidth={1.2} aria-hidden="true" />
             <p className="section-kicker">هنا نجتمع على الفرح</p>
             <h2 id="venue-title">عكّار العتيقة</h2>
             <p>ننتظركم بكلّ حبّ لنحتفل معاً بخطبتنا.</p>
@@ -141,7 +146,7 @@ export default function Home() {
         <footer className="site-footer">
           <p>ومعكم، تبدأ أجمل حكاية</p>
           <div className="footer-names">عمر <span>و</span> مريم</div>
-          <span>٢٦ . ٠٩ . ٢٠٢٦</span>
+          <button className="footer-return" onClick={returnToIntro}><RotateCcw size={15} aria-hidden="true" /> العودة إلى الافتتاحية</button>
         </footer>
       </main>
       <noscript><div className="no-script"><h1>خطبة عمر عبدالقادر ومريم تليجة</h1><p>السبت ٢٦ أيلول ٢٠٢٦، الساعة الخامسة مساءً، عكّار العتيقة.</p><a href={celebration.map}>موقع الحفل على الخريطة</a><p>فعّل JavaScript لعرض الدعوة المتحركة والعدّ التنازلي.</p></div></noscript>
