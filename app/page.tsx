@@ -116,7 +116,7 @@ export default function Home() {
           <p className="cover-bottom">بكلّ الحبّ، ندعوكم لمشاركتنا خطبتنا</p>
           <Button ref={openButton} className="open-button" onClick={openInvitation} tabIndex={phase === 'closed' ? 0 : -1}>
             <Heart className="tap-heart" size={20} aria-hidden="true" />
-            <span>المس لفتح الدعوة</span><ArrowUpLeft aria-hidden="true" />
+            <span>تبدأ الحكاية هنا</span><ArrowUpLeft aria-hidden="true" />
           </Button>
         </div>
       </div>
@@ -135,7 +135,6 @@ export default function Home() {
         </header>
         {musicError && <p role="status" className="music-status">تعذّر تحميل الموسيقى. يمكنك محاولة تشغيلها مجدداً.</p>}
         <section className="hero" id="home" aria-labelledby="couple-names">
-          <img src="/images/floral-background.webp" className="hero-art" alt="" width="1536" height="1024" fetchPriority="high" />
           <div className="hero-inner">
             <p className="eyebrow">دعوة لحفل خطبتنا</p>
             <div className="fine-rule" aria-hidden="true"><span>✧</span></div>
