@@ -81,11 +81,11 @@ export default function Home() {
     } catch { setPlaying(false); }
   }
 
-  function openInvitation(withMusic: boolean) {
+  function openInvitation() {
     if (phase !== 'closed') return;
     if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
     window.scrollTo({ top: 0, behavior: 'instant' });
-    if (withMusic) void playMusic(); else audio.current?.pause();
+    void playMusic();
     setPhase('opening');
   }
 
@@ -114,11 +114,10 @@ export default function Home() {
           <p className="cover-caption">بداية حكايتنا</p>
           <h2 className="cover-names">عمر <span>و</span> مريم</h2>
           <p className="cover-bottom">بكلّ الحبّ، ندعوكم لمشاركتنا خطبتنا</p>
-          <Button ref={openButton} className="open-button" onClick={() => openInvitation(true)} tabIndex={phase === 'closed' ? 0 : -1}>
+          <Button ref={openButton} className="open-button" onClick={openInvitation} tabIndex={phase === 'closed' ? 0 : -1}>
             <Heart className="tap-heart" size={20} aria-hidden="true" />
             <span>المس لفتح الدعوة</span><ArrowUpLeft aria-hidden="true" />
           </Button>
-          <button className="silent-open" onClick={() => openInvitation(false)} tabIndex={phase === 'closed' ? 0 : -1}>الدخول بدون موسيقى</button>
         </div>
       </div>
       <main className={`invitation ${phase !== 'closed' ? 'revealed' : ''}`} inert={!opened} aria-hidden={!opened}>

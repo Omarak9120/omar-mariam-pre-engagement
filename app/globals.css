@@ -49,8 +49,6 @@ h2 { font-family:'Amiri',Georgia,serif; font-weight:400; line-height:1.6; }
 .open-button { height:auto!important; min-height:58px; padding:14px 25px!important; margin:35px auto 4px; border-radius:999px!important; gap:15px!important; background:#eadac0!important; color:#501528!important; border:1px solid #e3cba4!important; font-size:1rem!important; touch-action:manipulation; animation:invitation-pulse 2.8s ease-in-out infinite; }
 .open-button:active { transform:scale(.96); }
 .tap-heart { animation:heart-beat 2.8s ease-in-out infinite; }
-.silent-open { display:block; margin:5px auto 0; font-size:.875rem; color:#e7d6bf; padding:12px 20px; text-underline-offset:5px; background:transparent; border:0; touch-action:manipulation; }
-.silent-open:hover { text-decoration:underline; }
 .cover-bottom { font-size:.9375rem; color:#d4bd9e; margin-top:4px; }
 .gold-dust { position:absolute; inset:0; overflow:hidden; pointer-events:none; }
 .gold-dust span { position:absolute; width:3px; height:3px; border-radius:50%; background:#f2ca83; box-shadow:0 0 9px 2px #efc27840; animation:gold-drift 6s ease-in-out infinite; }
