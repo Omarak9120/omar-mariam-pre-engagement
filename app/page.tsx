@@ -122,7 +122,7 @@ export default function Home() {
       </div>
       <main className={`invitation ${phase !== 'closed' ? 'revealed' : ''}`} inert={!opened} aria-hidden={!opened}>
         <header className="site-header">
-          <Button variant="ghost" className="intro-return" onClick={returnToIntro}>
+          <Button variant="ghost" className="intro-return" aria-label="العودة إلى الافتتاحية" onClick={returnToIntro}>
             <RotateCcw aria-hidden="true" /><span>العودة إلى الافتتاحية</span>
           </Button>
           <a href="#home" className="wordmark" aria-label="عمر ومريم، بداية الدعوة">عمر <span>و</span> مريم</a>

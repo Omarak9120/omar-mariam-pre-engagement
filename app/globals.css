@@ -58,10 +58,13 @@ h2 { font-family:'Amiri',Georgia,serif; font-weight:400; line-height:1.6; }
 .is-opening .curtain-left { animation:curtain-left 1.5s .2s cubic-bezier(.7,0,.2,1) both; }
 .invitation { opacity:0; }
 .invitation.revealed { opacity:1; }
-.site-header { min-height:74px; display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:12px; padding:10px 4%; border-bottom:1px solid #a6804830; background:#f8f3ebf5; color:var(--wine); position:sticky; top:0; z-index:20; backdrop-filter:blur(12px); }
-.wordmark { font-family:'Amiri',serif; font-size:1.7rem; text-align:center; }
+.site-header { min-height:74px; display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr); align-items:center; gap:12px; padding:10px 4%; border-bottom:1px solid #ffffff80; background:linear-gradient(120deg,#fffcf570,#f6f0e640); color:var(--wine); position:sticky; top:0; z-index:20; -webkit-backdrop-filter:blur(16px) saturate(150%); backdrop-filter:blur(16px) saturate(150%); box-shadow:inset 0 1px 0 #ffffff80,0 5px 24px #421b2809; }
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))) {
+  .site-header { background:#f8f3ebed; }
+}
+.wordmark { font-family:'Amiri',serif; font-size:1.7rem; text-align:center; white-space:nowrap; text-shadow:0 1px 10px #fff8; }
 .wordmark span { font-size:1.1rem; color:var(--gold); margin:0 5px; }
-.music-button,.intro-return { color:var(--wine)!important; min-height:44px!important; padding:8px 13px!important; gap:10px!important; font-size:.875rem!important; border-radius:999px!important; background:#591a2d06!important; width:fit-content; touch-action:manipulation; }
+.music-button,.intro-return { color:var(--wine)!important; min-height:44px!important; padding:8px 13px!important; gap:10px!important; font-size:.875rem!important; border-radius:999px!important; border:1px solid #ffffff80!important; background:#fffcf533!important; box-shadow:inset 0 1px 0 #ffffff50; width:fit-content; touch-action:manipulation; }
 .intro-return { justify-self:start; }
 .music-button { justify-self:end; }
 .music-button:active,.intro-return:active { background:#591a2d14!important; }
@@ -147,8 +150,9 @@ h2 { font-family:'Amiri',Georgia,serif; font-weight:400; line-height:1.6; }
   .hero-art { opacity:.68; }
   .hero-inner { width:90%; padding-top:48px; }
   .site-header { padding:10px 18px; }
-  .wordmark { display:none; }
-  .site-header { grid-template-columns:1fr 1fr; }
+  .wordmark { font-size:1.6rem; }
+  .music-button span,.intro-return span { display:none; }
+  .music-button,.intro-return { min-width:44px; justify-content:center; }
   .couple-names { gap:8px; }
   .hero-date { margin-top:32px; }
   .venue-section { margin:0 24px 70px; }
@@ -163,8 +167,6 @@ h2 { font-family:'Amiri',Georgia,serif; font-weight:400; line-height:1.6; }
   .hero-inner { padding:42px 0 30px; width:92%; }
   .site-header { padding:8px 12px; gap:6px; min-height:64px; }
   .intro-return,.music-button { padding:8px 10px!important; font-size:.875rem!important; gap:7px!important; }
-  .music-button span { display:none; }
-  .music-button { min-width:44px; justify-content:center; }
   .hero-intro { font-size:1.5rem; }
   .first-name { font-size:clamp(3.5rem,19vw,5.3rem); }
   .family-name { font-size:1.4rem; }
