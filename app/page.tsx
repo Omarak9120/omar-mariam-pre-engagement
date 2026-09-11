@@ -157,7 +157,7 @@ export default function Home() {
           <Heart className="note-icon" size={26} strokeWidth={1} aria-hidden="true" />
           <p className="section-kicker">أهلنا وأحبّتنا</p>
           <h2 id="note-title">أنتم أجمل تفاصيل هذا اليوم</h2>
-          <p>بكلّ حبّ وسعادة، ندعوكم لمشاركتنا حفل خطبتنا<br className="desktop-break" /> ولحظة تبادل الخواتم، لنبدأ معاً حكاية عمر.</p>
+          <p>بكلّ حبّ وسعادة، ندعوكم لمشاركتنا حفل خطبتنا<br className="desktop-break" /> ولحظة تبادل الخواتم، لنبدأ معاً حكايتنا.</p>
           <p className="note-signature">بحضوركم، تحلو البدايات</p>
           <div className="fine-rule" aria-hidden="true"><span>✧</span></div>
         </section>
